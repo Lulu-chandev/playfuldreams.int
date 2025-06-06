@@ -1,0 +1,841 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PT. Playful Dreams - Mainan Edukatif Interaktif</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header dengan animasi */
+        header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 1rem 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+        }
+
+        header.scrolled {
+            background: rgba(102, 126, 234, 0.95);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .logo:hover {
+            transform: scale(1.1);
+        }
+
+        .logo::before {
+            content: "🧸";
+            margin-right: 10px;
+            font-size: 2rem;
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-10px); }
+            60% { transform: translateY(-5px); }
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            position: relative;
+            padding: 5px 10px;
+        }
+
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: #ffd700;
+            transition: width 0.3s ease;
+        }
+
+        nav a:hover::after {
+            width: 100%;
+        }
+
+        nav a:hover {
+            color: #ffd700;
+        }
+
+        /* Hero Section dengan Parallax */
+        .hero {
+            background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 50%, #a8edea 100%);
+            padding: 8rem 0 4rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="20" cy="20" r="2" fill="white" opacity="0.3"/><circle cx="80" cy="40" r="3" fill="white" opacity="0.2"/><circle cx="40" cy="70" r="1.5" fill="white" opacity="0.4"/><circle cx="70" cy="80" r="2.5" fill="white" opacity="0.3"/></svg>');
+            animation: float 20s infinite linear;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0) rotate(0deg); }
+            100% { transform: translateY(-100vh) rotate(360deg); }
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            color: #333;
+            animation: slideInUp 1s ease-out;
+        }
+
+        .hero p {
+            font-size: 1.4rem;
+            margin-bottom: 2rem;
+            color: #666;
+            animation: slideInUp 1s ease-out 0.3s both;
+        }
+
+        @keyframes slideInUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .cta-button {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            padding: 15px 40px;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            animation: slideInUp 1s ease-out 0.6s both;
+        }
+
+        .cta-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .cta-button:hover::before {
+            left: 100%;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+        }
+
+        /* Interactive Age Selector */
+        .age-selector {
+            padding: 4rem 0;
+            background: #f8f9fa;
+        }
+
+        .age-selector h2 {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            color: #333;
+        }
+
+        .age-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin-bottom: 3rem;
+        }
+
+        .age-btn {
+            background: white;
+            border: 2px solid #667eea;
+            color: #667eea;
+            padding: 10px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: bold;
+        }
+
+        .age-btn:hover, .age-btn.active {
+            background: #667eea;
+            color: white;
+            transform: scale(1.05);
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.5s ease;
+        }
+
+        .products-grid.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .product-card {
+            background: white;
+            border-radius: 20px;
+            padding: 2rem;
+            text-align: center;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .product-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .product-card:hover::before {
+            opacity: 0.1;
+        }
+
+        .product-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+        }
+
+        .product-icon {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            transition: transform 0.3s ease;
+            position: relative;
+            z-index: 2;
+        }
+
+        .product-card:hover .product-icon {
+            transform: scale(1.2) rotate(10deg);
+        }
+
+        .product-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: #333;
+            position: relative;
+            z-index: 2;
+        }
+
+        .product-card p {
+            color: #666;
+            margin-bottom: 1rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .age-range {
+            background: #667eea;
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            display: inline-block;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* Interactive Quiz Section */
+        .quiz-section {
+            padding: 4rem 0;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .quiz-container {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .quiz-container h2 {
+            font-size: 2.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .quiz-card {
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .quiz-question {
+            font-size: 1.3rem;
+            margin-bottom: 2rem;
+        }
+
+        .quiz-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+        }
+
+        .quiz-option {
+            background: rgba(255,255,255,0.2);
+            border: 2px solid transparent;
+            color: white;
+            padding: 15px;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .quiz-option:hover {
+            background: rgba(255,255,255,0.3);
+            border-color: #ffd700;
+            transform: scale(1.05);
+        }
+
+        .quiz-result {
+            display: none;
+            background: rgba(255,255,255,0.2);
+            border-radius: 15px;
+            padding: 2rem;
+            margin-top: 2rem;
+        }
+
+        .quiz-result.show {
+            display: block;
+            animation: slideInUp 0.5s ease-out;
+        }
+
+        /* Benefits dengan Hover Effects */
+        .benefits {
+            padding: 4rem 0;
+            background: #f8f9fa;
+        }
+
+        .benefits h2 {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            color: #333;
+        }
+
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .benefit-item {
+            text-align: center;
+            padding: 2rem;
+            background: white;
+            border-radius: 20px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .benefit-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(102, 126, 234, 0.1), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .benefit-item:hover::before {
+            left: 100%;
+        }
+
+        .benefit-item:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+        }
+
+        .benefit-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            transition: transform 0.3s ease;
+        }
+
+        .benefit-item:hover .benefit-icon {
+            transform: scale(1.3) rotate(360deg);
+        }
+
+        /* Interactive Contact Form */
+        .contact {
+            padding: 4rem 0;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .contact-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: start;
+        }
+
+        .contact-form {
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 2rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: bold;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            border: none;
+            border-radius: 10px;
+            background: rgba(255,255,255,0.9);
+            color: #333;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            background: white;
+            box-shadow: 0 0 20px rgba(255,255,255,0.3);
+        }
+
+        .submit-btn {
+            background: #ffd700;
+            color: #333;
+            padding: 12px 30px;
+            border: none;
+            border-radius: 25px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+        }
+
+        .submit-btn:hover {
+            background: #ffed4a;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 215, 0, 0.4);
+        }
+
+        .contact-info {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        .contact-item {
+            background: rgba(255,255,255,0.1);
+            border-radius: 15px;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .contact-item:hover {
+            background: rgba(255,255,255,0.2);
+            transform: translateX(10px);
+        }
+
+        .contact-icon {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Floating Action Button */
+        .fab {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: white;
+            text-decoration: none;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+            transition: all 0.3s ease;
+            z-index: 1000;
+        }
+
+        .fab:hover {
+            transform: scale(1.1);
+            box-shadow: 0 8px 30px rgba(0,0,0,0.4);
+        }
+
+        /* Footer */
+        footer {
+            background: #333;
+            color: white;
+            text-align: center;
+            padding: 2rem 0;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .contact-content {
+                grid-template-columns: 1fr;
+            }
+
+            .age-buttons {
+                gap: 0.5rem;
+            }
+
+            .age-btn {
+                padding: 8px 15px;
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header id="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo" onclick="scrollToTop()">PT. Playful Dreams</div>
+                <nav>
+                    <ul>
+                        <li><a href="#home" onclick="scrollToSection('home')">Beranda</a></li>
+                        <li><a href="#products" onclick="scrollToSection('age-selector')">Produk</a></li>
+                        <li><a href="#quiz" onclick="scrollToSection('quiz-section')">Quiz</a></li>
+                        <li><a href="#benefits" onclick="scrollToSection('benefits')">Manfaat</a></li>
+                        <li><a href="#contact" onclick="scrollToSection('contact')">Kontak</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1>🎯 Dunia Mainan Edukatif Interaktif</h1>
+                <p>Temukan mainan yang tepat untuk si kecil dengan panduan interaktif kami!</p>
+                <button class="cta-button" onclick="scrollToSection('age-selector')">
+                    🚀 Mulai Eksplorasi
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Interactive Age Selector -->
+    <section id="age-selector" class="age-selector">
+        <div class="container">
+            <h2>🎨 Pilih Usia Anak Anda</h2>
+            <div class="age-buttons">
+                <button class="age-btn" onclick="filterByAge('2-3')" data-age="2-3">2-3 Tahun</button>
+                <button class="age-btn" onclick="filterByAge('3-5')" data-age="3-5">3-5 Tahun</button>
+                <button class="age-btn" onclick="filterByAge('5-8')" data-age="5-8">5-8 Tahun</button>
+                <button class="age-btn" onclick="filterByAge('8-12')" data-age="8-12">8-12 Tahun</button>
+                <button class="age-btn active" onclick="filterByAge('all')" data-age="all">Semua Usia</button>
+            </div>
+            <div class="products-grid show" id="products-grid">
+                <div class="product-card" data-ages="2-3,3-5">
+                    <div class="product-icon">🧩</div>
+                    <h3>Puzzle Bentuk Dasar</h3>
+                    <p>Puzzle sederhana dengan bentuk geometri untuk mengenalkan konsep dasar dan melatih koordinasi mata-tangan</p>
+                    <span class="age-range">Usia 2-5 tahun</span>
+                </div>
+                <div class="product-card" data-ages="2-3,3-5">
+                    <div class="product-icon">🔤</div>
+                    <h3>Balok Huruf Warna-Warni</h3>
+                    <p>Balok kayu dengan huruf dan angka berwarna cerah untuk belajar sambil bermain</p>
+                    <span class="age-range">Usia 2-6 tahun</span>
+                </div>
+                <div class="product-card" data-ages="3-5,5-8">
+                    <div class="product-icon">🎭</div>
+                    <h3>Set Bermain Peran</h3>
+                    <p>Kostum profesi dan aksesoris untuk mengembangkan imajinasi dan kemampuan sosial</p>
+                    <span class="age-range">Usia 3-10 tahun</span>
+                </div>
+                <div class="product-card" data-ages="5-8,8-12">
+                    <div class="product-icon">🔬</div>
+                    <h3>Kit Sains Eksperimen</h3>
+                    <p>Peralatan eksperimen sains yang aman untuk mengenalkan konsep fisika dan kimia dasar</p>
+                    <span class="age-range">Usia 5-12 tahun</span>
+                </div>
+                <div class="product-card" data-ages="3-5,5-8">
+                    <div class="product-icon">🎨</div>
+                    <h3>Studio Seni Kreatif</h3>
+                    <p>Set lengkap alat melukis, mewarnai, dan crafting untuk mengekspresikan kreativitas</p>
+                    <span class="age-range">Usia 3-12 tahun</span>
+                </div>
+                <div class="product-card" data-ages="2-3,3-5,5-8">
+                    <div class="product-icon">🏗️</div>
+                    <h3>Mega Blok Konstruksi</h3>
+                    <p>Blok bangunan dengan berbagai ukuran dan bentuk untuk mengembangkan kemampuan spasial</p>
+                    <span class="age-range">Usia 2-8 tahun</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Interactive Quiz -->
+    <section id="quiz-section" class="quiz-section">
+        <div class="container">
+            <div class="quiz-container">
+                <h2>🤔 Quiz: Mainan Apa yang Cocok?</h2>
+                <div class="quiz-card">
+                    <div class="quiz-question" id="quiz-question">
+                        Apa yang paling disukai anak Anda?
+                    </div>
+                    <div class="quiz-options" id="quiz-options">
+                        <div class="quiz-option" onclick="selectQuizAnswer('creative')">
+                            🎨 Menggambar & Mewarnai
+                        </div>
+                        <div class="quiz-option" onclick="selectQuizAnswer('logical')">
+                            🧩 Memecahkan Teka-teki
+                        </div>
+                        <div class="quiz-option" onclick="selectQuizAnswer('physical')">
+                            🏃 Aktivitas Fisik
+                        </div>
+                        <div class="quiz-option" onclick="selectQuizAnswer('social')">
+                            👥 Bermain dengan Teman
+                        </div>
+                    </div>
+                    <div class="quiz-result" id="quiz-result">
+                        <!-- Hasil quiz akan muncul di sini -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Benefits Section -->
+    <section id="benefits" class="benefits">
+        <div class="container">
+            <h2>✨ Manfaat Mainan Edukatif</h2>
+            <div class="benefits-grid">
+                <div class="benefit-item">
+                    <div class="benefit-icon">🧠</div>
+                    <h3>Mengasah Kecerdasan</h3>
+                    <p>Merangsang perkembangan kognitif dan kemampuan berpikir logis anak</p>
+                </div>
+                <div class="benefit-item">
+                    <div class="benefit-icon">🤝</div>
+                    <h3>Kemampuan Sosial</h3>
+                    <p>Mengembangkan kemampuan berinteraksi dan bekerja sama dengan orang lain</p>
+                </div>
+                <div class="benefit-item">
+                    <div class="benefit-icon">✋</div>
+                    <h3>Motorik Halus</h3>
+                    <p>Melatih koordinasi tangan dan jari untuk persiapan menulis dan aktivitas sehari-hari</p>
+                </div>
+                <div class="benefit-item">
+                    <div class="benefit-icon">💡</div>
+                    <h3>Kreativitas</h3>
+                    <p>Mendorong anak untuk berpikir out-of-the-box dan mengekspresikan diri</p>
+                </div>
+                <div class="benefit-item">
+                    <div class="benefit-icon">😊</div>
+                    <h3>Kepercayaan Diri</h3>
+                    <p>Membangun rasa percaya diri melalui pencapaian dalam bermain dan belajar</p>
+                </div>
+                <div class="benefit-item">
+                    <div class="benefit-icon">🎯</div>
+                    <h3>Fokus & Konsentrasi</h3>
+                    <p>Melatih kemampuan fokus dan konsentrasi yang penting untuk keberhasilan belajar</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Interactive Contact -->
+    <section id="contact" class="contact">
+        <div class="container">
+            <h2>📞 Hubungi Kami</h2>
+            <div class="contact-content">
+                <div class="contact-form">
+                    <h3>Kirim Pesan</h3>
+                    <form id="contactForm">
+                        <div class="form-group">
+                            <label for="name">Nama Lengkap</label>
+                            <input type="text" id="name" name="name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" id="email" name="email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="child-age">Usia Anak</label>
+                            <input type="text" id="child-age" name="child-age" placeholder="Contoh: 5 tahun">
+                        </div>
+                        <div class="form-group">
+                            <label for="message">Pesan</label>
+                            <textarea id="message" name="message" rows="4" placeholder="Ceritakan kebutuhan mainan edukatif untuk anak Anda..."></textarea>
+                        </div>
+                        <button type="submit" class="submit-btn">Kirim Pesan 🚀</button>
+                    </form>
+                </div>
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <div class="contact-icon">📍</div>
+                        <h3>Alamat Toko</h3>
+                        <p>Jl. Pendidikan Raya No. 123<br>Jakarta Selatan 12345</p>
+                    </div>
+                    <div class="contact-item">
+                        <div class="contact-icon">📞</div>
+                        <h3>Telepon & WhatsApp</h3>
+                        <p>+62 21 1234 5678<br>+62 812 3456 7890</p>
+                    </div>
+                    <div class="contact-item">
+                        <div class="contact-icon">✉️</div>
+                        <h3>Email</h3>
+                        <p>info@playfuldreams.co.id<br>cs@playfuldreams.co.id</p>
+                    </div>
+                    <div class="contact-item">
+                        <div class="contact-icon">🕒</div>
+                        <h3>Jam Operasional</h3>
+                        <p>Senin - Sabtu: 09:00 - 18:00<br>Minggu: 10:00 - 16:00</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Floating Action Button -->
+    <a href="#home" class="fab" onclick="scrollToTop()">
+        ⬆️
+    </a>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p>&copy; 2024 PT. Playful Dreams. Semua hak dilindungi undang-undang.</p>
+            <p>🎈 Menciptakan Masa Depan Cerah Melalui Bermain Edukatif 🎈</p>
+        </div>
+    </footer>
+
+    <script>
+        // Header scroll effect
+        window.addEventListener('scroll', function() {
+            const header = document.getElementById('header');
+            if (window.scrollY > 100) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+
+        // Smooth scrolling
+        function scrollToSection(sectionId) {
+            const element = document.getElementById(sectionId);
+            if (element) {
+                element.scrollIntoView({ behavior: 'smooth' });
+            }
+        }
+
+        function scrollToTop() {
+            window.scrollTo({ top: 0, behavior: 'smooth
